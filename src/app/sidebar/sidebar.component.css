@@ -1,0 +1,56 @@
+/* Agregar al final de tu archivo CSS actual */
+
+/* Estilos para enlaces activos */
+nav ul li a.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Efectos hover */
+nav ul li a:hover {
+  color: #0056b3;
+  transition: color 0.3s ease;
+}
+
+.patients ul li:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 5px;
+  margin: -5px;
+}
+
+.logout a:hover {
+  color: #dc3545;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Mejoras en el diseño */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.patients {
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.logout {
+  position: absolute;
+  bottom: 20px;
+  width: calc(100% - 40px);
+}
+nav ul li a.active {
+  background-color: #e8e8e8;
+  border-radius: 4px;
+  font-weight: 500;
+}
