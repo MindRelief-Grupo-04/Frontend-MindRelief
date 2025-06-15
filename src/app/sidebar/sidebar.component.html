@@ -1,26 +1,61 @@
-<div class="sidebar">
-  <div class="logo">
-    <img src="assets/images/logo.png" alt="PhobiaShift VR Logo">
-    <h2>PhobiaShift VR</h2>
+<div class="sidebar" [class.collapsed]="!isExpanded">
+  <div class="sidebar-header">
+    <div class="logo-container">
+      <img src="assets/images/logo.png" alt="PhobiaShift VR Logo">
+      <h2 *ngIf="isExpanded">PhobiaShift VR</h2>
+    </div>
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <i [class]="isExpanded ? 'fas fa-chevron-left' : 'fas fa-chevron-right'"></i>
+    </button>
   </div>
-  <nav>
-    <ul>
-      <li><a routerLink="/inicio" routerLinkActive="active">Inicio</a></li>
-      <li><a routerLink="/agenda" routerLinkActive="active">Agenda</a></li>
-      <li><a routerLink="/pacientes" routerLinkActive="active">Pacientes</a></li>
-      <li><a routerLink="/configuracion" routerLinkActive="active">Configuración</a></li>
-    </ul>
-  </nav>
-  <div class="patients">
-    <h3>Mis Pacientes</h3>
-    <ul>
-      <li><span class="dot green"></span> Gabriel</li>
-      <li><span class="dot orange"></span> Rafael</li>
-      <li><span class="dot purple"></span> Dana</li>
-      <li><span class="dot blue"></span> Nadia</li>
-    </ul>
+
+  <div class="sidebar-content">
+    <nav class="nav-menu">
+      <a routerLink="/inicio" routerLinkActive="active" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span *ngIf="isExpanded">Inicio</span>
+      </a>
+      <a routerLink="/agenda" routerLinkActive="active" class="nav-item">
+        <i class="fas fa-calendar-alt"></i>
+        <span *ngIf="isExpanded">Agenda</span>
+      </a>
+      <a routerLink="/pacientes" routerLinkActive="active" class="nav-item">
+        <i class="fas fa-users"></i>
+        <span *ngIf="isExpanded">Pacientes</span>
+      </a>
+      <a routerLink="/configuracion" routerLinkActive="active" class="nav-item">
+        <i class="fas fa-cog"></i>
+        <span *ngIf="isExpanded">Configuración</span>
+      </a>
+    </nav>
+
+    <div class="patients-section" *ngIf="isExpanded">
+      <h3>Mis Pacientes</h3>
+      <div class="patient-list">
+        <div class="patient-item">
+          <span class="status green"></span>
+          <span class="patient-name">Gabriel</span>
+        </div>
+        <div class="patient-item">
+          <span class="status orange"></span>
+          <span class="patient-name">Rafael</span>
+        </div>
+        <div class="patient-item">
+          <span class="status purple"></span>
+          <span class="patient-name">Dana</span>
+        </div>
+        <div class="patient-item">
+          <span class="status blue"></span>
+          <span class="patient-name">Nadia</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="logout">
-    <a (click)="cerrarSesion()">Cerrar Sesión</a>
+
+  <div class="logout-section">
+    <button class="logout-btn" (click)="cerrarSesion()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span *ngIf="isExpanded">Cerrar Sesión</span>
+    </button>
   </div>
 </div>
