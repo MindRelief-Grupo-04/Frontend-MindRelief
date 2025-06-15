@@ -1,0 +1,11 @@
+<button class="add-button" (click)="toggleForm()">
+  ➕ Agregar Paciente
+</button>
+
+<div class="modal-backdrop" *ngIf="showForm">
+  <div class="modal">
+    <h3>Formulario de nuevo paciente</h3>
+    <p>XXXXXXXXXXXXXXXX</p>
+    <button class="close-btn" (click)="toggleForm()">Cerrar</button>
+  </div>
+</div>
