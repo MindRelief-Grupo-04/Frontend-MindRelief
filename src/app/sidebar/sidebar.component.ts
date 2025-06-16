@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../User/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,11 +17,13 @@ import { CommonModule } from '@angular/common';
 export class SidebarComponent {
   isExpanded = true;
 
+  constructor(private authService: AuthService) {}
+
   toggleSidebar() {
     this.isExpanded = !this.isExpanded;
   }
 
   cerrarSesion() {
-    console.log('Cerrando sesión...');
+    this.authService.logout();
   }
 }
