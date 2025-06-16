@@ -1,4 +1,3 @@
-
 .loading-container, .error-container {
   display: flex;
   flex-direction: column;
@@ -44,7 +43,6 @@
   background: #0056b3;
 }
 
-
 .monitor-container {
   padding: 20px;
   max-width: 1200px;
@@ -52,10 +50,10 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-
 .patient-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 30px;
   padding: 20px 0;
   border-bottom: 2px solid #f0f0f0;
@@ -66,18 +64,41 @@
   font-weight: 300;
   margin: 0;
   color: #333;
+  flex: 1;
+}
+
+.patient-header .patient-therapist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+}
+
+.patient-header .therapist-info {
+  font-size: 0.9rem;
+  color: #007bff;
+  background: rgba(0, 123, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  border: 1px solid rgba(0, 123, 255, 0.2);
 }
 
 .patient-header .edit-icon {
-  margin-left: 15px;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(0, 123, 255, 0.1);
+  border: 1px solid rgba(0, 123, 255, 0.2);
 }
 
 .patient-header .edit-icon:hover {
   opacity: 1;
+  background: rgba(0, 123, 255, 0.2);
+  transform: scale(1.1);
 }
 
 /* Monitor Layout */
@@ -92,8 +113,17 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
-}
 
+  .patient-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .patient-header .patient-therapist {
+    margin: 0;
+  }
+}
 
 .patient-info {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -138,7 +168,6 @@
   background: rgba(255, 255, 255, 0.7);
 }
 
-
 .vitals-monitor {
   background: white;
   border-radius: 12px;
@@ -171,7 +200,6 @@
   font-weight: 600;
   font-size: 1.1rem;
 }
-
 
 .heart-rate-display {
   background: linear-gradient(135deg, #ffe6e6, #fff0f0);
@@ -212,7 +240,6 @@
   letter-spacing: 1px;
 }
 
-
 .heart-wave-section {
   padding: 25px;
   background: #fafafa;
@@ -241,7 +268,6 @@
 .heart-wave-section .wave-header .info-icon:hover {
   opacity: 1;
 }
-
 
 .wave-display .wave-info {
   display: flex;
@@ -287,12 +313,10 @@
   font-weight: 500;
 }
 
-
 .rhythm-value,
 .status-label {
   transition: all 0.3s ease;
 }
-
 
 .patient-info:hover {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -305,7 +329,6 @@
   transform: translateY(-2px);
   transition: all 0.3s ease;
 }
-
 
 @media (max-width: 768px) {
   .monitor-container {

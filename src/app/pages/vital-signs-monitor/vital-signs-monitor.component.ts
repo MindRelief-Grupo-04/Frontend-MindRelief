@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { PatientService } from '../../services/patient.service';
+import { AuthService, User} from '../../User/services/auth.service';
 import { Patient } from '../../models/patient.model';
 import { interval, Subscription } from 'rxjs';
 
@@ -14,24 +15,43 @@ import { interval, Subscription } from 'rxjs';
 })
 export class VitalSignsMonitorComponent implements OnInit, OnDestroy {
   patient: Patient | null = null;
+  currentUser: User | null = null;
   loading = true;
   error = '';
-  currentPatientId = 1;
+  currentPatientId = 0;
   private updateSubscription?: Subscription;
+  private userSubscription?: Subscription;
 
   constructor(
     private patientService: PatientService,
-    private route: ActivatedRoute
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Obtener ID del paciente desde la ruta
-    this.route.params.subscribe(params => {
-      this.currentPatientId = +params['id'] || 1;
-      this.loadPatient();
+
+    this.userSubscription = this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+      if (!user) {
+
+        this.router.navigate(['/login']);
+        return;
+      }
     });
 
-    // Iniciar actualizaciones periódicas
+
+    this.route.params.subscribe(params => {
+      this.currentPatientId = +params['id'];
+      if (this.currentPatientId && this.currentUser) {
+        this.loadPatient();
+      } else if (!this.currentPatientId) {
+        this.error = 'ID de paciente no válido';
+        this.loading = false;
+      }
+    });
+
+
     this.startPeriodicUpdate();
   }
 
@@ -39,14 +59,32 @@ export class VitalSignsMonitorComponent implements OnInit, OnDestroy {
     if (this.updateSubscription) {
       this.updateSubscription.unsubscribe();
     }
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   loadPatient(): void {
+    if (!this.currentUser || !this.currentPatientId) {
+      this.error = 'Usuario no autenticado o ID de paciente inválido';
+      this.loading = false;
+      return;
+    }
+
     this.loading = true;
     this.error = '';
 
-    this.patientService.getPatient(this.currentPatientId).subscribe({
+
+    this.patientService.getPatientById(this.currentPatientId).subscribe({
       next: (patient) => {
+        // Verificar que el paciente pertenezca al usuario actual
+        // Convertir ambos valores al mismo tipo para comparación
+        if (String(patient.userId) !== String(this.currentUser!.id)) {
+          this.error = 'No tienes acceso a este paciente';
+          this.loading = false;
+          return;
+        }
+
         this.patient = patient;
         this.loading = false;
       },
@@ -59,10 +97,10 @@ export class VitalSignsMonitorComponent implements OnInit, OnDestroy {
   }
 
   startPeriodicUpdate(): void {
-    // Actualizar cada 5 segundos (cuando uses Samsung Health, ajusta según necesites)
+    // Actualizar cada 5 segundos
     this.updateSubscription = interval(5000).subscribe(() => {
-      if (this.patient && !this.loading) {
-        this.loadPatient(); // Recargar datos del servidor
+      if (this.patient && !this.loading && this.currentUser) {
+        this.loadPatient();
       }
     });
   }
@@ -72,19 +110,25 @@ export class VitalSignsMonitorComponent implements OnInit, OnDestroy {
    * Aquí procesarás los datos reales del dispositivo
    */
   processSamsungHealthData(healthData: any): void {
-    if (!this.patient) return;
+    if (!this.patient || !this.currentUser) return;
 
-    // Ejemplo de cómo procesarías los datos reales
+
+    if (String(this.patient.userId) !== String(this.currentUser.id)) {
+      console.error('Sin permisos para actualizar este paciente');
+      return;
+    }
+
+
     if (healthData.heartRate) {
       this.patient.heartRate.current = healthData.heartRate;
 
-      // Actualizar historial
+
       this.patient.heartRate.history.push(healthData.heartRate);
       if (this.patient.heartRate.history.length > 20) {
         this.patient.heartRate.history.shift();
       }
 
-      // Determinar estado y ritmo basado en datos reales
+
       this.updateHeartRateStatus(healthData.heartRate);
       this.updateRhythmFromHeartRate();
 
@@ -127,7 +171,17 @@ export class VitalSignsMonitorComponent implements OnInit, OnDestroy {
   }
 
   private updatePatientOnServer(): void {
-    if (!this.patient) return;
+    if (!this.patient || !this.currentUser) return;
+
+
+
+    if (String(this.patient.userId) !== String(this.currentUser.id)) {
+      console.error('Sin permisos para actualizar este paciente');
+      return;
+    }
+
+
+    this.patient.lastUpdated = new Date().toISOString();
 
     this.patientService.updatePatient(this.patient).subscribe({
       next: (updatedPatient) => {
@@ -191,7 +245,7 @@ export class VitalSignsMonitorComponent implements OnInit, OnDestroy {
     const height = 80;
     const points: string[] = [];
 
-    // Usar los últimos 20 puntos para el gráfico
+
     const recentHistory = history.slice(-20);
 
     recentHistory.forEach((value, index) => {
@@ -202,5 +256,13 @@ export class VitalSignsMonitorComponent implements OnInit, OnDestroy {
     });
 
     return points.join(' ');
+  }
+
+  goBackToPatients(): void {
+    this.router.navigate(['/pacientes']);
+  }
+
+  getUserInfo(): string {
+    return this.currentUser ? `${this.currentUser.name} (${this.currentUser.email})` : '';
   }
 }

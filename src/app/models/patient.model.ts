@@ -6,6 +6,7 @@ export interface HeartRate {
 
 export interface Patient {
   id: number;
+  userId: string;
   name: string;
   age: number;
   gender: string;
@@ -13,4 +14,6 @@ export interface Patient {
   room: string;
   heartRate: HeartRate;
   rhythm: string;
+  createdAt?: string;
+  lastUpdated?: string;
 }

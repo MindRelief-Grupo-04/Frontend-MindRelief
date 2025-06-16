@@ -1,12 +1,15 @@
-<div class="monitor-container" *ngIf="!loading && patient">
-  <!-- Header del paciente -->
+<div class="monitor-container" *ngIf="!loading && patient && currentUser">
+
   <div class="patient-header">
     <h1 class="patient-name">{{ patient?.name }}</h1>
-    <div class="edit-icon">✏️</div>
+    <div class="patient-therapist">
+      <span class="therapist-info">Terapeuta: {{ getUserInfo() }}</span>
+    </div>
+    <div class="edit-icon" (click)="goBackToPatients()">⬅️</div>
   </div>
 
   <div class="monitor-layout">
-    <!-- Panel izquierdo - Información del paciente -->
+
     <div class="patient-info">
       <div class="info-row">
         <span class="label">Edad:</span>
@@ -36,7 +39,17 @@
       </div>
 
       <div class="info-row">
+        <span class="label">Creado:</span>
+        <span class="value">{{ patient?.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+
+      <div class="info-row">
         <span class="label">Última actualización:</span>
+        <span class="value">{{ patient?.lastUpdated | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Hora actual:</span>
         <span class="value">{{ getCurrentTime() }}</span>
       </div>
     </div>
@@ -73,7 +86,6 @@
             <span class="wave-value">{{ patient?.heartRate?.current }}</span>
           </div>
 
-
           <div class="wave-chart">
             <svg width="100%" height="80" viewBox="0 0 300 80">
               <polyline
@@ -107,4 +119,13 @@
 <div class="error-container" *ngIf="error">
   <p class="error-message">{{ error }}</p>
   <button (click)="loadPatient()" class="retry-button">Reintentar</button>
+  <button (click)="goBackToPatients()" class="retry-button" style="margin-left: 10px; background: #6c757d;">
+    Volver a Pacientes
+  </button>
+</div>
+
+
+<div class="error-container" *ngIf="!currentUser && !loading">
+  <p class="error-message">Usuario no autenticado</p>
+  <button (click)="goBackToPatients()" class="retry-button">Ir a Pacientes</button>
 </div>
