@@ -69,4 +69,9 @@ export class AuthService {
   isAuthenticated(): boolean {
     return this.currentUserValue !== null && localStorage.getItem('currentUser') !== null;
   }
+
+  getCurrentUserId(): string {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.id || '';
+  }
 }
