@@ -74,4 +74,13 @@ export class AuthService {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.id || '';
   }
+  updateUserProfile(user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/users/${user.id}`, user).pipe(
+      map(updatedUser => {
+        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        this.currentUserSubject.next(updatedUser);
+        return updatedUser;
+      })
+    );
+  }
 }
