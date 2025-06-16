@@ -150,5 +150,25 @@
       "createdAt": "2024-12-01T17:00:00Z",
       "lastUpdated": "2024-12-15T14:37:00Z"
     }
+  ],
+  "events": [
+    {
+      "id": "1",
+      "userId": "1",
+      "title": "Reunión de trabajo",
+      "start": "2024-06-16T09:00:00Z",
+      "end": "2024-06-16T10:30:00Z",
+      "description": "Reunión semanal de planificación",
+      "color": "#4285f4"
+    },
+    {
+      "id": "2",
+      "userId": "8792",
+      "title": "Almuerzo con colegas",
+      "start": "2024-06-16T13:00:00Z",
+      "end": "2024-06-16T14:00:00Z",
+      "description": "Almuerzo en la cafetería central",
+      "color": "#0b8043"
+    }
   ]
 }

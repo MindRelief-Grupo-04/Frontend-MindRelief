@@ -1,0 +1,26 @@
+.calendar-container {
+  margin: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 800px;
+}
+
+:host ::ng-deep .fc {
+  height: 100%;
+}
+
+:host ::ng-deep .fc-toolbar-title {
+  font-size: 1.5em !important;
+}
+
+:host ::ng-deep .fc-button {
+  background-color: #1a73e8 !important;
+  border-color: #1a73e8 !important;
+}
+
+:host ::ng-deep .fc-button-active {
+  background-color: #174ea6 !important;
+  border-color: #174ea6 !important;
+}
