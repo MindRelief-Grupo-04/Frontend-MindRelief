@@ -12,5 +12,143 @@
       "email": "yazu@correo.com",
       "password": "hola"
     }
+  ],
+  "patients": [
+    {
+      "id": 1,
+      "userId": "1",
+      "name": "Romina Vallejos",
+      "age": 34,
+      "gender": "Femenino",
+      "session": 1,
+      "room": "101A",
+      "heartRate": {
+        "current": 72,
+        "status": "Normal",
+        "history": [68, 75, 70, 78, 65, 72, 69, 74, 71, 72, 76, 68, 73, 70, 75]
+      },
+      "rhythm": "Regular",
+      "createdAt": "2024-12-01T10:00:00Z",
+      "lastUpdated": "2024-12-15T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "userId": "1",
+      "name": "Carlos Rodríguez",
+      "age": 45,
+      "gender": "Masculino",
+      "session": 2,
+      "room": "102B",
+      "heartRate": {
+        "current": 55,
+        "status": "Bajo",
+        "history": [58, 52, 56, 50, 57, 53, 55, 48, 56, 54, 51, 57, 53, 55, 52]
+      },
+      "rhythm": "Bradicardia",
+      "createdAt": "2024-12-01T11:00:00Z",
+      "lastUpdated": "2024-12-15T14:31:00Z"
+    },
+    {
+      "id": 3,
+      "userId": "8792",
+      "name": "Ana Martínez",
+      "age": 28,
+      "gender": "Femenino",
+      "session": 1,
+      "room": "103A",
+      "heartRate": {
+        "current": 105,
+        "status": "Alto",
+        "history": [102, 110, 98, 106, 112, 103, 107, 95, 109, 104, 108, 101, 105, 111, 106]
+      },
+      "rhythm": "Taquicardia",
+      "createdAt": "2024-12-01T12:00:00Z",
+      "lastUpdated": "2024-12-15T14:32:00Z"
+    },
+    {
+      "id": 4,
+      "userId": "8792",
+      "name": "Luis Pérez",
+      "age": 52,
+      "gender": "Masculino",
+      "session": 3,
+      "room": "104C",
+      "heartRate": {
+        "current": 78,
+        "status": "Normal",
+        "history": [76, 82, 74, 79, 85, 75, 78, 73, 81, 77, 80, 74, 78, 83, 79]
+      },
+      "rhythm": "Regular",
+      "createdAt": "2024-12-01T13:00:00Z",
+      "lastUpdated": "2024-12-15T14:33:00Z"
+    },
+    {
+      "id": 5,
+      "userId": "1",
+      "name": "Elena Sánchez",
+      "age": 41,
+      "gender": "Femenino",
+      "session": 2,
+      "room": "105B",
+      "heartRate": {
+        "current": 88,
+        "status": "Normal",
+        "history": [85, 92, 84, 88, 95, 86, 90, 82, 89, 87, 91, 84, 88, 94, 87]
+      },
+      "rhythm": "Regular",
+      "createdAt": "2024-12-01T14:00:00Z",
+      "lastUpdated": "2024-12-15T14:34:00Z"
+    },
+    {
+      "id": 6,
+      "userId": "8792",
+      "name": "Roberto Castro",
+      "age": 38,
+      "gender": "Masculino",
+      "session": 1,
+      "room": "106A",
+      "heartRate": {
+        "current": 45,
+        "status": "Bajo",
+        "history": [48, 42, 46, 40, 47, 43, 45, 38, 46, 44, 41, 47, 43, 45, 42]
+      },
+      "rhythm": "Bradicardia",
+      "createdAt": "2024-12-01T15:00:00Z",
+      "lastUpdated": "2024-12-15T14:35:00Z"
+    },
+    {
+      "id": 7,
+      "userId": "1",
+      "name": "Patricia López",
+      "age": 29,
+      "gender": "Femenino",
+      "session": 2,
+      "room": "107B",
+      "heartRate": {
+        "current": 115,
+        "status": "Alto",
+        "history": [112, 120, 108, 116, 125, 113, 117, 105, 119, 114, 118, 110, 115, 122, 116]
+      },
+      "rhythm": "Taquicardia",
+      "createdAt": "2024-12-01T16:00:00Z",
+      "lastUpdated": "2024-12-15T14:36:00Z"
+    },
+    {
+      "id": 8,
+      "userId": "8792",
+      "name": "Miguel Torres",
+      "age": 33,
+      "gender": "Masculino",
+      "session": 3,
+      "room": "108C",
+      "heartRate": {
+        "current": 82,
+        "status": "Normal",
+        "history": [80, 86, 78, 82, 88, 79, 84, 76, 83, 81, 85, 77, 82, 87, 83]
+      },
+      "rhythm": "Regular",
+      "createdAt": "2024-12-01T17:00:00Z",
+      "lastUpdated": "2024-12-15T14:37:00Z"
+    }
   ]
 }

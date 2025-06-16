@@ -31,6 +31,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/configuracion/configuracion.component').then(m => m.ConfiguracionComponent)
   },
   {
+    path: 'monitoring/:id',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/vital-signs-monitor/vital-signs-monitor.component').then(m => m.VitalSignsMonitorComponent)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
