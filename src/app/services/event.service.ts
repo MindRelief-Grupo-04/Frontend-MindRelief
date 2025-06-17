@@ -7,7 +7,7 @@ import { Event } from '../interfaces/event.interface';
   providedIn: 'root'
 })
 export class EventService {
-  private apiUrl = 'http://localhost:3000/events';
+  private apiUrl = 'https://mindreliefdb.onrender.com/events';
 
   constructor(private http: HttpClient) { }
 
