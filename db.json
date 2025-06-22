@@ -57,22 +57,6 @@
       "age": 21,
       "gender": "Femenino",
       "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/203.png"
-    },
-    {
-      "id": "8ab7",
-      "userId": "1",
-      "name": "Romi",
-      "age": 20,
-      "gender": "Femenino",
-      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png"
-    },
-    {
-      "id": "65ef",
-      "userId": "1",
-      "name": "fucking salva",
-      "age": 21,
-      "gender": "Masculino",
-      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/683.png"
     }
   ],
   "events": [
