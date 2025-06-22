@@ -1,1 +1,28 @@
-<p>sessions works!</p>
+<div class="sessions-container">
+  <h2>Sesiones del paciente #{{ patientId }}</h2>
+
+  <div class="session-form">
+    <h3>Agendar nueva sesión</h3>
+    <form (ngSubmit)="addSession()">
+      <input type="date" [(ngModel)]="newDate" name="date" required />
+      <input type="text" [(ngModel)]="newDescription" name="description" placeholder="Descripción" required />
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <div class="session-list">
+    <h3>Sesiones agendadas</h3>
+    <div *ngIf="sessions.length > 0; else empty">
+      <div class="session-card" *ngFor="let session of sessions">
+        <div class="info">
+          <strong>{{ session.date }}</strong>
+          <p>{{ session.description }}</p>
+        </div>
+        <button class="delete" (click)="deleteSession(session.id)">✖</button>
+      </div>
+    </div>
+    <ng-template #empty>
+      <p>No hay sesiones agendadas aún.</p>
+    </ng-template>
+  </div>
+</div>

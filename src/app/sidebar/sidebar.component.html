@@ -32,7 +32,7 @@
     <div class="patients-section" *ngIf="isExpanded && patients.length > 0">
       <h3>Mis Pacientes</h3>
       <div class="patient-list">
-        <div class="patient-item" *ngFor="let patient of patients">
+        <div class="patient-item" *ngFor="let patient of patients" (click)="goToSessions(patient.id.toString())">
           <span class="status blue"></span>
           <span class="patient-name">{{ patient.name }}</span>
         </div>
@@ -45,4 +45,5 @@
       <span *ngIf="isExpanded">Cerrar Sesión</span>
     </button>
   </div>
+</div>
 </div>

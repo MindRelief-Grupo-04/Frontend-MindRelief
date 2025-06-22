@@ -17,6 +17,12 @@
       "name": "hola123",
       "email": "hola@gmail.com",
       "password": "hola"
+    },
+    {
+      "id": "aa72",
+      "name": "leonardo leon",
+      "email": "hola12345@gmail.com",
+      "password": "hola"
     }
   ],
   "patients": [
@@ -26,6 +32,20 @@
       "name": "usuarioreal",
       "age": 54,
       "gender": "Femenino"
+    },
+    {
+      "id": "2305",
+      "userId": "1",
+      "name": "Kurt Puican",
+      "age": 23,
+      "gender": "Masculino"
+    },
+    {
+      "id": "4c7f",
+      "userId": "aa72",
+      "name": "Karen Dejo",
+      "age": 43,
+      "gender": "Masculino"
     }
   ],
   "events": [
@@ -46,6 +66,33 @@
       "end": "2024-06-16T14:00:00Z",
       "description": "Almuerzo en la cafetería central",
       "color": "#0b8043"
+    },
+    {
+      "id": "1cb1",
+      "userId": "aa72",
+      "title": "willy",
+      "start": "2025-06-15T08:00:00-05:00",
+      "end": "2025-06-15T08:30:00-05:00",
+      "description": "",
+      "color": "#4285f4"
+    },
+    {
+      "id": "df20",
+      "userId": "aa72",
+      "title": "maria",
+      "start": "2025-06-16T11:00:00-05:00",
+      "end": "2025-06-16T11:30:00-05:00",
+      "description": "",
+      "color": "#4285f4"
+    },
+    {
+      "id": "3e45",
+      "userId": "aa72",
+      "title": "salva",
+      "start": "2025-06-18T07:00:00-05:00",
+      "end": "2025-06-18T07:30:00-05:00",
+      "description": "",
+      "color": "#4285f4"
     }
   ]
 }

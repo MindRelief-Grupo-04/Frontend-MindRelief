@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../User/services/auth.service';
 import { PatientService } from '../services/patient.service';
@@ -18,14 +18,15 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    const userId = this.authService.currentUserValue?.id?.toString() || '';
+    const userId = this.authService.currentUserValue?.id;
     if (userId) {
-      this.patientService.getPatientsByUser(userId).subscribe((patients) => {
-        this.patients = patients;
+      this.patientService.getPatientsByUser(userId.toString()).subscribe(p => {
+        this.patients = p;
       });
     }
   }
@@ -36,5 +37,9 @@ export class SidebarComponent implements OnInit {
 
   cerrarSesion(): void {
     this.authService.logout();
+
+  }
+  goToSessions(patientId: string) {
+    this.router.navigate(['/paciente', patientId, 'sesiones']);
   }
 }
