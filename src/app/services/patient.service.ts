@@ -7,7 +7,7 @@ import { Patient } from '../models/patient.model';
   providedIn: 'root'
 })
 export class PatientService {
-  private apiUrl = 'https://mindreliefdb.onrender.com/patients';
+  private apiUrl = 'http://localhost:3000/patients';
 
   constructor(private http: HttpClient) {}
 

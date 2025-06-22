@@ -14,7 +14,7 @@ export interface User {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://mindreliefdb.onrender.com';
+  private apiUrl = 'http://localhost:3000';
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
 
@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   getCurrentUserId(): string {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
     return user.id || '';
   }
   updateUserProfile(user: User): Observable<User> {

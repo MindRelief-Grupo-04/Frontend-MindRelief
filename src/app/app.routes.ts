@@ -23,18 +23,18 @@ export const routes: Routes = [
   {
     path: 'pacientes',
     canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/pacientes/patient-dashboard.component').then(m => m.PatientDashboardComponent)
+    loadComponent: () => import('./pages/pacientes/components/patient-dashboard/patient-dashboard.component').then(m => m.PatientDashboardComponent)
   },
   {
     path: 'configuracion',
     canActivate: [AuthGuard],
     loadComponent: () => import('./pages/configuracion/configuracion.component').then(m => m.ConfiguracionComponent)
   },
-  {
-    path: 'monitoring/:id',
-    canActivate: [AuthGuard],
-    loadComponent: () => import('./pages/vital-signs-monitor/vital-signs-monitor.component').then(m => m.VitalSignsMonitorComponent)
-  },
+ // {
+   // path: 'monitoring/:id',
+   // canActivate: [AuthGuard],
+   // loadComponent: () => import('./pages/vital-signs-monitor/vital-signs-monitor.component').then(m => m.VitalSignsMonitorComponent)
+  //},
   {
     path: '',
     redirectTo: 'login',

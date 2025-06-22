@@ -1,9 +1,5 @@
 <div class="card">
-  <!-- Panel izquierdo -->
-  <div class="left-panel">
-    <p class="title">Última experiencia</p>
-    <img [src]="patient.imageUrl" alt="Imagen experiencia" />
-  </div>
+
 
   <!-- Panel derecho -->
   <div class="right-panel">
@@ -21,7 +17,7 @@
     </div>
 
     <p class="meta">Edad: {{ patient.age }} años</p>
-    <p class="meta">Última sesión: {{ patient.lastSession }}</p>
+
 
     <button class="view-more" (click)="toggleDetails()">
       💬 Ver más
@@ -33,7 +29,7 @@
     <h4>Detalles del paciente</h4>
     <p><strong>Nombre:</strong> {{ patient.name }}</p>
     <p><strong>Edad:</strong> {{ patient.age }}</p>
-    <p><strong>Sesión actual:</strong> {{ patient.lastSession }}</p>
+
     <p><strong>Fobia:</strong> Acrofobia</p>
     <button (click)="toggleDetails()">Cerrar</button>
   </div>

@@ -19,7 +19,6 @@
   box-shadow: 0 6px 14px rgba(0,0,0,0.1);
 }
 
-/* Modal básico (lo mantengo por si ya lo tenías) */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -39,6 +38,17 @@
   border-radius: 12px;
   width: 300px;
   text-align: center;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
 .close-btn {

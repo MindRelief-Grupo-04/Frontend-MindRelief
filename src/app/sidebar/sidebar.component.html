@@ -29,30 +29,17 @@
       </a>
     </nav>
 
-    <div class="patients-section" *ngIf="isExpanded">
+    <div class="patients-section" *ngIf="isExpanded && patients.length > 0">
       <h3>Mis Pacientes</h3>
       <div class="patient-list">
-        <div class="patient-item">
-          <span class="status green"></span>
-          <span class="patient-name">Gabriel</span>
-        </div>
-        <div class="patient-item">
-          <span class="status orange"></span>
-          <span class="patient-name">Rafael</span>
-        </div>
-        <div class="patient-item">
-          <span class="status purple"></span>
-          <span class="patient-name">Dana</span>
-        </div>
-        <div class="patient-item">
+        <div class="patient-item" *ngFor="let patient of patients">
           <span class="status blue"></span>
-          <span class="patient-name">Nadia</span>
+          <span class="patient-name">{{ patient.name }}</span>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="logout-section">
+    <div class="logout-section">
     <button class="logout-btn" (click)="cerrarSesion()">
       <i class="fas fa-sign-out-alt"></i>
       <span *ngIf="isExpanded">Cerrar Sesión</span>
