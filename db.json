@@ -57,6 +57,22 @@
       "age": 21,
       "gender": "Femenino",
       "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/203.png"
+    },
+    {
+      "id": "e0b7",
+      "userId": "8792",
+      "name": "fucking salva",
+      "age": 21,
+      "gender": "Masculino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/385.png"
+    },
+    {
+      "id": "0aa2",
+      "userId": "8792",
+      "name": "sebas",
+      "age": 32,
+      "gender": "Masculino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/300.png"
     }
   ],
   "events": [
@@ -104,6 +120,36 @@
       "end": "2025-06-18T07:30:00-05:00",
       "description": "",
       "color": "#4285f4"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "41ea",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-06-10",
+      "description": "Avion"
+    },
+    {
+      "id": "9f04",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-06-22",
+      "description": "room"
+    },
+    {
+      "id": "08db",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-06-30",
+      "description": "reunion 1"
+    },
+    {
+      "id": "059d",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-07-02",
+      "description": "reunion 1"
     }
   ]
 }

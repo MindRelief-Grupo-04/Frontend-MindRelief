@@ -1,6 +1,7 @@
 <div class="sessions-container">
-  <h2>Sesiones del paciente #{{ patientId }}</h2>
+  <h2>Sesiones de {{ patientName }}</h2>
 
+  <!-- Agendar nueva sesión -->
   <div class="session-form">
     <h3>Agendar nueva sesión</h3>
     <form (ngSubmit)="addSession()">
@@ -10,19 +11,40 @@
     </form>
   </div>
 
+  <!-- Card: Sesión de hoy -->
+  <div *ngIf="todaySession" class="latest-session-card">
+    <h4>Sesión programada para hoy</h4>
+    <p><strong>{{ todaySession.date }}</strong> — {{ todaySession.description }}</p>
+    <button (click)="startMonitoring(todaySession)">Iniciar monitoreo</button>
+  </div>
+
+  <!-- Card: Última sesión registrada -->
+  <div *ngIf="latestSession && latestSession !== todaySession" class="latest-session-card">
+    <h4>Última sesión registrada</h4>
+    <p><strong>{{ latestSession.date }}</strong> — {{ latestSession.description }}</p>
+  </div>
+
+  <!-- Lista de sesiones -->
   <div class="session-list">
     <h3>Sesiones agendadas</h3>
-    <div *ngIf="sessions.length > 0; else empty">
-      <div class="session-card" *ngFor="let session of sessions">
-        <div class="info">
-          <strong>{{ session.date }}</strong>
-          <p>{{ session.description }}</p>
-        </div>
-        <button class="delete" (click)="deleteSession(session.id)">✖</button>
-      </div>
-    </div>
-    <ng-template #empty>
-      <p>No hay sesiones agendadas aún.</p>
-    </ng-template>
+    <table class="sessions-table">
+      <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let session of sessions">
+        <td>{{ session.date }}</td>
+        <td>{{ session.description }}</td>
+        <td>
+          <button (click)="viewSession(session)">Ver</button>
+          <button class="delete" (click)="deleteSession(session.id)">✖</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

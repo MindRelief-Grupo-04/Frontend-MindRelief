@@ -22,19 +22,8 @@
     <p class="meta">Edad: {{ patient.age }} años</p>
     <p class="meta">Género: {{ patient.gender }}</p>
 
-    <button class="view-more" (click)="toggleDetails()">
-      💬 Ver más
+    <button class="view-more" (click)="goToSessions()">
+      🔎 Ver Sesiones
     </button>
-  </div>
-
-  <!-- Panel de detalles -->
-  <div class="detail-modal" *ngIf="showDetails">
-    <h4>Detalles del paciente</h4>
-    <p><strong>Nombre:</strong> {{ patient.name }}</p>
-    <p><strong>Edad:</strong> {{ patient.age }}</p>
-    <p><strong>Género:</strong> {{ patient.gender }}</p>
-
-    <p><strong>Fobia:</strong> Acrofobia</p>
-    <button (click)="toggleDetails()">Cerrar</button>
   </div>
 </div>

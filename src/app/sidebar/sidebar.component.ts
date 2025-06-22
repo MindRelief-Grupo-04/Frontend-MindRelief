@@ -5,6 +5,7 @@ import { AuthService } from '../User/services/auth.service';
 import { PatientService } from '../services/patient.service';
 import { Patient } from '../models/patient.model';
 
+
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -19,7 +20,8 @@ export class SidebarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private patientService: PatientService,
-    private router: Router
+    private router: Router,
+
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +29,7 @@ export class SidebarComponent implements OnInit {
     if (userId) {
       this.patientService.getPatientsByUser(userId.toString()).subscribe(p => {
         this.patients = p;
+
       });
     }
   }
@@ -39,7 +42,10 @@ export class SidebarComponent implements OnInit {
     this.authService.logout();
 
   }
-  goToSessions(patientId: string) {
-    this.router.navigate(['/paciente', patientId, 'sesiones']);
+  goToSessions(patientId: string, name: string) {
+    this.router.navigate(['/paciente', patientId, 'sesiones'], {
+      queryParams: { name }
+    });
   }
+
 }
