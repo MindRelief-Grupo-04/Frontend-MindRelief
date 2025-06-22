@@ -1,5 +1,8 @@
 <div class="card">
-
+  <!-- Panel izquierdo con imagen -->
+  <div class="left-panel">
+    <img [src]="patient.imageUrl" alt="Imagen del paciente" />
+  </div>
 
   <!-- Panel derecho -->
   <div class="right-panel">
@@ -17,7 +20,7 @@
     </div>
 
     <p class="meta">Edad: {{ patient.age }} años</p>
-
+    <p class="meta">Género: {{ patient.gender }}</p>
 
     <button class="view-more" (click)="toggleDetails()">
       💬 Ver más
@@ -29,6 +32,7 @@
     <h4>Detalles del paciente</h4>
     <p><strong>Nombre:</strong> {{ patient.name }}</p>
     <p><strong>Edad:</strong> {{ patient.age }}</p>
+    <p><strong>Género:</strong> {{ patient.gender }}</p>
 
     <p><strong>Fobia:</strong> Acrofobia</p>
     <button (click)="toggleDetails()">Cerrar</button>

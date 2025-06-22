@@ -27,25 +27,52 @@
   ],
   "patients": [
     {
-      "id": "2e7c",
+      "id": "a076",
       "userId": "1",
-      "name": "usuarioreal",
-      "age": 54,
-      "gender": "Femenino"
+      "name": "Kurt",
+      "age": 22,
+      "gender": "Masculino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/237.png"
     },
     {
-      "id": "2305",
+      "id": "e570",
       "userId": "1",
-      "name": "Kurt Puican",
+      "name": "Jandro",
+      "age": 22,
+      "gender": "Masculino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/146.png"
+    },
+    {
+      "id": "be08",
+      "userId": "1",
+      "name": "Rafael",
       "age": 23,
-      "gender": "Masculino"
+      "gender": "Masculino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/504.png"
     },
     {
-      "id": "4c7f",
-      "userId": "aa72",
-      "name": "Karen Dejo",
-      "age": 43,
-      "gender": "Masculino"
+      "id": "45d0",
+      "userId": "1",
+      "name": "Clara",
+      "age": 21,
+      "gender": "Femenino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/203.png"
+    },
+    {
+      "id": "8ab7",
+      "userId": "1",
+      "name": "Romi",
+      "age": 20,
+      "gender": "Femenino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png"
+    },
+    {
+      "id": "65ef",
+      "userId": "1",
+      "name": "fucking salva",
+      "age": 21,
+      "gender": "Masculino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/683.png"
     }
   ],
   "events": [
