@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Patient} from '../../../../models/patient.model';
+import { Patient } from '../../../../models/patient.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-card',
@@ -13,13 +14,16 @@ export class PatientCardComponent {
   @Input() patient!: Patient;
 
   showOptions = false;
-  showDetails = false;
 
-  toggleOptions() {
+  constructor(private router: Router) {}
+
+  toggleOptions(): void {
     this.showOptions = !this.showOptions;
   }
 
-  toggleDetails() {
-    this.showDetails = !this.showDetails;
+  goToSessions(): void {
+    this.router.navigate(['/paciente', this.patient.id, 'sesiones'], {
+      queryParams: { name: this.patient.name }
+    });
   }
 }
