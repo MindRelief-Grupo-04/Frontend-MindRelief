@@ -1,7 +1,7 @@
 export interface Session {
-  id?: string; // Opcional para crear nuevas
+  id: string;
   userId: string;
   patientId: string;
-  date: string;         // Formato YYYY-MM-DD
+  date: string;
   description: string;
 }
