@@ -8,6 +8,7 @@
     <form (ngSubmit)="submitForm()">
       <input type="text" [(ngModel)]="name" name="name" placeholder="Nombre" required />
       <input type="number" [(ngModel)]="age" name="age" placeholder="Edad" required min="1" />
+
       <select [(ngModel)]="gender" name="gender">
         <option>Femenino</option>
         <option>Masculino</option>
