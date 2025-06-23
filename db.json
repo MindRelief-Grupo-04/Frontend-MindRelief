@@ -23,6 +23,12 @@
       "name": "leonardo leon",
       "email": "hola12345@gmail.com",
       "password": "hola"
+    },
+    {
+      "id": "b604",
+      "name": "nosecomollegueaqui",
+      "email": "nosecomollegueaqui@gmail.com",
+      "password": "olacomoestas"
     }
   ],
   "patients": [
@@ -73,6 +79,14 @@
       "age": 32,
       "gender": "Masculino",
       "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/300.png"
+    },
+    {
+      "id": "d597",
+      "userId": "b604",
+      "name": "sebas",
+      "age": 32,
+      "gender": "Masculino",
+      "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/244.png"
     }
   ],
   "events": [
@@ -150,6 +164,42 @@
       "userId": "1",
       "date": "2025-07-02",
       "description": "reunion 1"
+    },
+    {
+      "id": "25e8",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-06-22",
+      "description": "reunion 1"
+    },
+    {
+      "id": "b2b6",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-06-23",
+      "description": "reunion 1"
+    },
+    {
+      "id": "9c4c",
+      "patientId": "d597",
+      "userId": "b604",
+      "date": "2025-06-22",
+      "description": "Avion"
+    },
+    {
+      "id": "a1ee",
+      "patientId": "d597",
+      "userId": "b604",
+      "date": "2025-06-22",
+      "description": "reunion 1"
+    },
+    {
+      "id": "a897",
+      "patientId": "d597",
+      "userId": "b604",
+      "date": "2025-06-22",
+      "description": "sesion 5"
     }
-  ]
+  ],
+  "recordedSessions": []
 }
