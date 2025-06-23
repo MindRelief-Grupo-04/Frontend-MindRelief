@@ -138,68 +138,184 @@
   ],
   "sessions": [
     {
-      "id": "41ea",
-      "patientId": "a076",
-      "userId": "1",
-      "date": "2025-06-10",
-      "description": "Avion"
-    },
-    {
-      "id": "9f04",
-      "patientId": "a076",
-      "userId": "1",
-      "date": "2025-06-22",
-      "description": "room"
-    },
-    {
-      "id": "08db",
-      "patientId": "a076",
-      "userId": "1",
-      "date": "2025-06-30",
-      "description": "reunion 1"
-    },
-    {
-      "id": "059d",
-      "patientId": "a076",
-      "userId": "1",
-      "date": "2025-07-02",
-      "description": "reunion 1"
-    },
-    {
-      "id": "25e8",
-      "patientId": "a076",
-      "userId": "1",
-      "date": "2025-06-22",
-      "description": "reunion 1"
-    },
-    {
-      "id": "b2b6",
-      "patientId": "a076",
-      "userId": "1",
+      "id": "1704",
+      "patientId": "d597",
+      "userId": "b604",
       "date": "2025-06-23",
       "description": "reunion 1"
     },
     {
-      "id": "9c4c",
-      "patientId": "d597",
-      "userId": "b604",
-      "date": "2025-06-22",
-      "description": "Avion"
-    },
-    {
-      "id": "a1ee",
-      "patientId": "d597",
-      "userId": "b604",
-      "date": "2025-06-22",
+      "id": "4e16",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-06-24",
       "description": "reunion 1"
     },
     {
-      "id": "a897",
-      "patientId": "d597",
-      "userId": "b604",
-      "date": "2025-06-22",
-      "description": "sesion 5"
+      "id": "aabb",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-06-23",
+      "description": "sesion 1"
     }
   ],
-  "recordedSessions": []
+  "recordedSessions": [],
+  "monitoringRecords": [
+    {
+      "id": "daa5",
+      "sessionId": "1704",
+      "patientId": "d597",
+      "userId": "b604",
+      "startTime": 1750703435652,
+      "endTime": 1750703502915,
+      "startTimeLocal": 1750685435652,
+      "endTimeLocal": 1750685502915,
+      "duration": 66,
+      "totalRecords": 3,
+      "avgHeartRate": 112,
+      "minHeartRate": 108,
+      "maxHeartRate": 123,
+      "records": [
+        {
+          "avgHeartRate": 110,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703493000,
+          "maxHeartRate": 123,
+          "minHeartRate": 108,
+          "recordedAt": 1750703499282,
+          "startTime": 1750703493000,
+          "syncTimestamp": 1750703499282,
+          "id": 8,
+          "localTimestamp": 1750685499282
+        },
+        {
+          "avgHeartRate": 115,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703477000,
+          "maxHeartRate": 122,
+          "minHeartRate": 109,
+          "recordedAt": 1750703482075,
+          "startTime": 1750703477000,
+          "syncTimestamp": 1750703482075,
+          "id": 7,
+          "localTimestamp": 1750685482075
+        },
+        {
+          "avgHeartRate": 111,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703456000,
+          "maxHeartRate": 124,
+          "minHeartRate": 110,
+          "recordedAt": 1750703462235,
+          "startTime": 1750703456000,
+          "syncTimestamp": 1750703462235,
+          "id": 6,
+          "localTimestamp": 1750685462235
+        }
+      ],
+      "createdAt": "2025-06-23T18:31:42.915Z"
+    },
+    {
+      "id": "b463",
+      "sessionId": "aabb",
+      "patientId": "a076",
+      "userId": "1",
+      "startTime": 1750703851090,
+      "endTime": 1750703985672,
+      "startTimeLocal": 1750685851090,
+      "endTimeLocal": 1750685985672,
+      "duration": 134,
+      "totalRecords": 7,
+      "avgHeartRate": 73,
+      "minHeartRate": 64,
+      "maxHeartRate": 92,
+      "records": [
+        {
+          "avgHeartRate": 74,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703969000,
+          "maxHeartRate": 92,
+          "minHeartRate": 64,
+          "recordedAt": 1750703978289,
+          "startTime": 1750703969000,
+          "syncTimestamp": 1750703978289,
+          "id": 15,
+          "localTimestamp": 1750685978289
+        },
+        {
+          "avgHeartRate": 71,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703955000,
+          "maxHeartRate": 92,
+          "minHeartRate": 64,
+          "recordedAt": 1750703967944,
+          "startTime": 1750703955000,
+          "syncTimestamp": 1750703967945,
+          "id": 14,
+          "localTimestamp": 1750685967945
+        },
+        {
+          "avgHeartRate": 71,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703955000,
+          "maxHeartRate": 92,
+          "minHeartRate": 64,
+          "recordedAt": 1750703967689,
+          "startTime": 1750703955000,
+          "syncTimestamp": 1750703967689,
+          "id": 13,
+          "localTimestamp": 1750685967689
+        },
+        {
+          "avgHeartRate": 73,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703942000,
+          "maxHeartRate": 92,
+          "minHeartRate": 64,
+          "recordedAt": 1750703949238,
+          "startTime": 1750703942000,
+          "syncTimestamp": 1750703949238,
+          "id": 12,
+          "localTimestamp": 1750685949238
+        },
+        {
+          "avgHeartRate": 82,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703927000,
+          "maxHeartRate": 92,
+          "minHeartRate": 64,
+          "recordedAt": 1750703934921,
+          "startTime": 1750703927000,
+          "syncTimestamp": 1750703934921,
+          "id": 11,
+          "localTimestamp": 1750685934921
+        },
+        {
+          "avgHeartRate": 64,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703890000,
+          "maxHeartRate": 92,
+          "minHeartRate": 64,
+          "recordedAt": 1750703896277,
+          "startTime": 1750703890000,
+          "syncTimestamp": 1750703896277,
+          "id": 10,
+          "localTimestamp": 1750685896277
+        },
+        {
+          "avgHeartRate": 75,
+          "deviceId": "008aad67e94e2937",
+          "endTime": 1750703873000,
+          "maxHeartRate": 92,
+          "minHeartRate": 74,
+          "recordedAt": 1750703878478,
+          "startTime": 1750703873000,
+          "syncTimestamp": 1750703878478,
+          "id": 9,
+          "localTimestamp": 1750685878478
+        }
+      ],
+      "createdAt": "2025-06-23T18:39:45.673Z"
+    }
+  ]
 }

@@ -1,0 +1,281 @@
+<div class="session-details-container">
+  <!-- Header -->
+  <div class="header">
+    <button (click)="goBack()" class="back-btn">← Volver a sesiones</button>
+    <h1>📊 Análisis de Sesión</h1>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Cargando análisis de la sesión...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-state">
+    <h3>❌ Error</h3>
+    <p>{{ error }}</p>
+    <button (click)="loadSessionData()" class="retry-btn">Reintentar</button>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!loading && !error" class="content">
+    <!-- Session Info -->
+    <div class="session-info-card">
+      <h2>📅 Información de la Sesión</h2>
+      <div class="session-details">
+        <div class="detail-item">
+          <span class="label">Fecha:</span>
+          <span class="value">{{ session.date }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Descripción:</span>
+          <span class="value">{{ session.description }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Paciente ID:</span>
+          <span class="value">{{ session.patientId }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Data State -->
+    <div *ngIf="monitoringRecords.length === 0" class="no-data-state">
+      <h3>📭 Sin datos de monitoreo</h3>
+      <p>Esta sesión aún no tiene registros de monitoreo cardíaco.</p>
+      <p>Los datos aparecerán aquí una vez que se realice el monitoreo.</p>
+    </div>
+
+    <!-- Analytics Dashboard -->
+    <div *ngIf="monitoringRecords.length > 0" class="analytics-dashboard">
+
+      <!-- Overview Cards -->
+      <div class="overview-section">
+        <h2>📈 Resumen General</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-content">
+              <div class="stat-number">{{ analytics.totalMonitoringSessions }}</div>
+              <div class="stat-label">Sesiones de Monitoreo</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-content">
+              <div class="stat-number">{{ formatDuration(analytics.totalDuration) }}</div>
+              <div class="stat-label">Tiempo Total Monitoreado</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">📊</div>
+            <div class="stat-content">
+              <div class="stat-number">{{ analytics.totalRecords }}</div>
+              <div class="stat-label">Registros Totales</div>
+            </div>
+          </div>
+
+          <div class="stat-card" [style.border-color]="getHealthStatusColor()">
+            <div class="stat-icon">🫀</div>
+            <div class="stat-content">
+              <div class="stat-number" [style.color]="getHealthStatusColor()">
+                {{ analytics.avgHeartRateOverall }}
+              </div>
+              <div class="stat-label">BPM Promedio General</div>
+              <div class="stat-sublabel" [style.color]="getHealthStatusColor()">
+                {{ getHealthStatusText() }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heart Rate Analysis -->
+      <div class="heart-rate-section">
+        <h2>💓 Análisis de Frecuencia Cardíaca</h2>
+        <div class="hr-analysis-grid">
+          <div class="hr-card normal">
+            <h4>📊 Rango Completo</h4>
+            <div class="hr-range">
+              <span class="min-value">{{ analytics.minHeartRateOverall }} BPM</span>
+              <div class="range-bar">
+                <div class="range-indicator"
+                     [style.left.%]="((analytics.minHeartRateOverall - 40) / 120) * 100"
+                     [style.width.%]="((analytics.maxHeartRateOverall - analytics.minHeartRateOverall) / 120) * 100">
+                </div>
+              </div>
+              <span class="max-value">{{ analytics.maxHeartRateOverall }} BPM</span>
+            </div>
+            <div class="avg-indicator">
+              <span>Promedio: <strong>{{ analytics.avgHeartRateOverall }} BPM</strong></span>
+            </div>
+          </div>
+
+          <div class="hr-card trend">
+            <h4>{{ getTrendIcon() }} Tendencia</h4>
+            <div class="trend-info">
+              <span class="trend-text">{{ getTrendText() }}</span>
+              <small>Basado en las últimas 3 sesiones</small>
+            </div>
+          </div>
+
+          <div class="hr-card activity">
+            <h4>📅 Actividad Semanal</h4>
+            <div class="activity-stat">
+              <span class="activity-number">{{ analytics.trends.sessionsThisWeek }}</span>
+              <span class="activity-label">sesiones esta semana</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time of Day Analysis -->
+      <div class="time-analysis-section" *ngIf="timeAnalysis">
+        <h2>🕐 Análisis por Hora del Día</h2>
+        <div class="time-grid">
+          <div class="time-card" *ngIf="timeAnalysis.avgByTimeOfDay.morning > 0">
+            <div class="time-icon">🌅</div>
+            <h4>Mañana (6:00 - 12:00)</h4>
+            <div class="time-stats">
+              <span class="time-avg">{{ timeAnalysis.avgByTimeOfDay.morning }} BPM</span>
+              <small>{{ timeAnalysis.morningRecords.length }} registros</small>
+            </div>
+          </div>
+
+          <div class="time-card" *ngIf="timeAnalysis.avgByTimeOfDay.afternoon > 0">
+            <div class="time-icon">☀️</div>
+            <h4>Tarde (12:00 - 18:00)</h4>
+            <div class="time-stats">
+              <span class="time-avg">{{ timeAnalysis.avgByTimeOfDay.afternoon }} BPM</span>
+              <small>{{ timeAnalysis.afternoonRecords.length }} registros</small>
+            </div>
+          </div>
+
+          <div class="time-card" *ngIf="timeAnalysis.avgByTimeOfDay.evening > 0">
+            <div class="time-icon">🌙</div>
+            <h4>Noche (18:00 - 6:00)</h4>
+            <div class="time-stats">
+              <span class="time-avg">{{ timeAnalysis.avgByTimeOfDay.evening }} BPM</span>
+              <small>{{ timeAnalysis.eveningRecords.length }} registros</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Sessions -->
+      <div class="recent-sessions-section">
+        <h2>🕒 Historial de Monitoreos</h2>
+        <div class="sessions-list">
+          <div *ngFor="let record of monitoringRecords" class="monitoring-record">
+            <div class="record-header">
+              <div class="record-date">
+                <span class="icon">📅</span>
+                <span>{{ formatDate(record.startTimeLocal) }}</span>
+              </div>
+              <div class="record-time">
+                <span class="icon">🕐</span>
+                <span>{{ formatTime(record.startTimeLocal) }} - {{ formatTime(record.endTimeLocal) }}</span>
+              </div>
+              <div class="record-duration">
+                <span class="icon">⏱️</span>
+                <span>{{ formatDuration(record.duration) }}</span>
+              </div>
+            </div>
+
+            <div class="record-stats">
+              <div class="mini-stat">
+                <span class="mini-label">Registros:</span>
+                <span class="mini-value">{{ record.totalRecords }}</span>
+              </div>
+              <div class="mini-stat heart-rate">
+                <span class="mini-label">Promedio:</span>
+                <span class="mini-value" [style.color]="getHealthStatusColor()">
+                  {{ record.avgHeartRate }} BPM
+                </span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-label">Rango:</span>
+                <span class="mini-value">{{ record.minHeartRate }} - {{ record.maxHeartRate }}</span>
+              </div>
+            </div>
+
+            <div class="record-actions">
+              <button class="view-details-btn"
+                      (click)="record.showDetails = !record.showDetails">
+                {{ record.showDetails ? '🔼 Ocultar detalles' : '🔽 Ver detalles' }}
+              </button>
+              <button class="delete-btn" (click)="deleteMonitoringRecord(record.id!)">
+                🗑️ Eliminar
+              </button>
+            </div>
+
+            <!-- Detailed Records -->
+            <div *ngIf="record.showDetails" class="detailed-records">
+              <h5>📈 Registros Detallados</h5>
+              <div class="detailed-list">
+                <div *ngFor="let hr of record.records" class="detail-record">
+                  <div class="detail-time">
+                    <!-- ✅ CORRECCIÓN: Usar la nueva función para obtener el tiempo correcto -->
+                    <span>{{ formatTimeForRecord(hr) }}</span>
+                  </div>
+                  <div class="detail-device">
+                    <span>📱 {{ hr.deviceId }}</span>
+                  </div>
+                  <div class="detail-heart-rate">
+                    <span class="detail-avg">{{ hr.avgHeartRate }} BPM</span>
+                    <span class="detail-range">({{ hr.minHeartRate }}-{{ hr.maxHeartRate }})</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health Recommendations -->
+      <div class="recommendations-section">
+        <h2>💡 Recomendaciones</h2>
+        <div class="recommendations-card">
+          <div *ngIf="analytics.healthStatus === 'normal'" class="recommendation normal">
+            <span class="rec-icon">✅</span>
+            <div class="rec-content">
+              <h4>Estado Normal</h4>
+              <p>La frecuencia cardíaca promedio se encuentra en el rango normal (60-100 BPM).</p>
+              <p><strong>Recomendación:</strong> Continuar con el monitoreo regular.</p>
+            </div>
+          </div>
+
+          <div *ngIf="analytics.healthStatus === 'attention'" class="recommendation attention">
+            <span class="rec-icon">⚠️</span>
+            <div class="rec-content">
+              <h4>Requiere Atención</h4>
+              <p>La frecuencia cardíaca se encuentra fuera del rango normal estándar.</p>
+              <p><strong>Recomendación:</strong> Consultar con un especialista y aumentar la frecuencia de monitoreo.</p>
+            </div>
+          </div>
+
+          <div *ngIf="analytics.healthStatus === 'concern'" class="recommendation concern">
+            <span class="rec-icon">🚨</span>
+            <div class="rec-content">
+              <h4>Preocupante</h4>
+              <p>La frecuencia cardíaca muestra valores que requieren atención médica inmediata.</p>
+              <p><strong>Recomendación:</strong> Consultar urgentemente con un cardiólogo.</p>
+            </div>
+          </div>
+
+          <div class="general-recommendations">
+            <h4>📋 Recomendaciones Generales</h4>
+            <ul>
+              <li>Mantener un registro regular de la actividad física</li>
+              <li>Monitorear la frecuencia cardíaca en diferentes momentos del día</li>
+              <li>Anotar cualquier síntoma o evento inusual durante el monitoreo</li>
+              <li>Seguir las indicaciones médicas específicas del tratamiento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
