@@ -35,11 +35,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/sessions/sessions.component').then(m => m.SessionsComponent)
   },
 
- // {
-   // path: 'monitoring/:id',
-   // canActivate: [AuthGuard],
-   // loadComponent: () => import('./pages/vital-signs-monitor/vital-signs-monitor.component').then(m => m.VitalSignsMonitorComponent)
-  //},
+  {
+    path: 'monitoring/:sessionId',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/realtime/realtime.component').then(m => m.RealtimeComponent)
+  },
   {
     path: '',
     redirectTo: 'login',
