@@ -6,6 +6,7 @@ import { Subscription, interval } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../services/session.service';
+import { MonitoringService, MonitoringRecord } from '../../services/monitoring.service';
 
 @Component({
   selector: 'app-realtime',
@@ -34,7 +35,8 @@ export class RealtimeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private monitoringService: MonitoringService
   ) {}
 
   ngOnInit(): void {
@@ -165,36 +167,51 @@ export class RealtimeComponent implements OnInit, OnDestroy {
     this.monitoring = false;
     this.sub?.unsubscribe();
 
+    // Calcular estadísticas para el registro
+    const stats = this.getStatistics();
+
     // Preparar payload para enviar al backend
-    const recordPayload = {
+    const monitoringRecord: Omit<MonitoringRecord, 'id' | 'createdAt'> = {
       sessionId: this.sessionId,
+      patientId: this.session.patientId,
+      userId: this.session.userId,
       startTime: this.startTime,
       endTime: Date.now(),
       startTimeLocal: this.startTimeLocal,
       endTimeLocal: this.getPeruCurrentTime().getTime(),
       duration: this.monitoringDuration,
       totalRecords: this.records.length,
+      avgHeartRate: stats?.avgHeartRate || 0,
+      minHeartRate: stats?.minHeartRate || 0,
+      maxHeartRate: stats?.maxHeartRate || 0,
       records: this.records.map(r => ({
         ...r,
         localTimestamp: this.convertToPeruTime(r.syncTimestamp || r.recordedAt).getTime()
       }))
     };
 
-    console.log('Enviando payload:', recordPayload);
+    console.log('Enviando registro de monitoreo:', monitoringRecord);
 
-    this.http.post('http://localhost:3000/monitoring', recordPayload)
+    // Usar el nuevo servicio de monitoreo
+    this.monitoringService.createMonitoringRecord(monitoringRecord)
       .subscribe({
         next: (response) => {
-          console.log('Datos guardados exitosamente:', response);
+          console.log('Registro de monitoreo guardado exitosamente:', response);
           this.router.navigate(
             ['/paciente', this.session.patientId, 'sesiones'],
             { queryParams: { name: this.patientName } }
           );
         },
         error: (error) => {
-          console.error('Error al guardar datos:', error);
+          console.error('Error al guardar registro de monitoreo:', error);
           // Aún así navegar de vuelta, pero mostrar mensaje de error
           alert('Hubo un error al guardar los datos del monitoreo. Por favor, inténtalo de nuevo.');
+
+          // Navegar de vuelta a las sesiones
+          this.router.navigate(
+            ['/paciente', this.session.patientId, 'sesiones'],
+            { queryParams: { name: this.patientName } }
+          );
         }
       });
   }

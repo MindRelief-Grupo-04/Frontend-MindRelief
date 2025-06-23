@@ -1,6 +1,6 @@
 // models/heartrate.model.ts
 export interface HeartRate {
-  id?: string;
+  id?: string | number;
   deviceId: string;
   avgHeartRate: number;
   minHeartRate: number;
@@ -10,7 +10,12 @@ export interface HeartRate {
   sessionId?: string;
   patientId?: string;
 
-  // Propiedades opcionales adicionales que podrías tener
+  // Tiempos específicos para el análisis temporal
+  startTime?: number;        // Tiempo de inicio del registro
+  endTime?: number;          // Tiempo de fin del registro
+  localTimestamp?: number;   // ✅ AGREGADA: Timestamp en hora local (Perú)
+
+  // Propiedades opcionales adicionales
   batteryLevel?: number;
   signalQuality?: number;
   timestamp?: number;        // Por si usas timestamp genérico

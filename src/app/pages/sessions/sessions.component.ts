@@ -132,7 +132,8 @@ export class SessionsComponent implements OnInit {
   }
 
   viewSession(session: Session): void {
-    this.router.navigate([`/session/${session.id}/details`]);
+    // Cambiar la navegación para ir a la pantalla de analytics
+    this.router.navigate([`/session/${session.id}/analytics`]);
   }
 
   /**

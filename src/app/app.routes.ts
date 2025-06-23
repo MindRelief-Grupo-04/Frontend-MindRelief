@@ -41,6 +41,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/realtime/realtime.component').then(m => m.RealtimeComponent)
   },
   {
+    path: 'session/:id/analytics',
+    canActivate: [AuthGuard],
+    loadComponent: () => import('./pages/analytics/analytics.component').then(m => m.AnalyticsComponent)
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
