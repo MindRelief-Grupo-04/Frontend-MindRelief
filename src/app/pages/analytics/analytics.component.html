@@ -1,5 +1,6 @@
 <div class="session-details-container">
   <!-- Header -->
+
   <div class="header">
     <button (click)="goBack()" class="back-btn">← Volver a sesiones</button>
     <h1>📊 Análisis de Sesión</h1>
@@ -32,9 +33,10 @@
           <span class="label">Descripción:</span>
           <span class="value">{{ session.description }}</span>
         </div>
+        <!-- ✅ CORRECCIÓN: Mostrar nombre del paciente en lugar del ID -->
         <div class="detail-item">
-          <span class="label">Paciente ID:</span>
-          <span class="value">{{ session.patientId }}</span>
+          <span class="label">Paciente:</span>
+          <span class="value">{{ patientName }}</span>
         </div>
       </div>
     </div>
@@ -133,7 +135,7 @@
 
       <!-- Time of Day Analysis -->
       <div class="time-analysis-section" *ngIf="timeAnalysis">
-        <h2>🕐 Análisis por Hora del Día</h2>
+        <h2>🕐 Análisis por Hora del Día (Hora de Perú)</h2>
         <div class="time-grid">
           <div class="time-card" *ngIf="timeAnalysis.avgByTimeOfDay.morning > 0">
             <div class="time-icon">🌅</div>
@@ -213,11 +215,11 @@
 
             <!-- Detailed Records -->
             <div *ngIf="record.showDetails" class="detailed-records">
-              <h5>📈 Registros Detallados</h5>
+              <h5>📈 Registros Detallados (Hora de Perú)</h5>
               <div class="detailed-list">
                 <div *ngFor="let hr of record.records" class="detail-record">
                   <div class="detail-time">
-                    <!-- ✅ CORRECCIÓN: Usar la nueva función para obtener el tiempo correcto -->
+                    <!-- ✅ CORRECCIÓN: Usar la función mejorada para obtener el tiempo correcto en Perú -->
                     <span>{{ formatTimeForRecord(hr) }}</span>
                   </div>
                   <div class="detail-device">
@@ -252,7 +254,7 @@
             <div class="rec-content">
               <h4>Requiere Atención</h4>
               <p>La frecuencia cardíaca se encuentra fuera del rango normal estándar.</p>
-              <p><strong>Recomendación:</strong> Consultar con un especialista y aumentar la frecuencia de monitoreo.</p>
+              <p><strong>Recomendación:</strong> Considerar aumentar la frecuencia de monitoreo.</p>
             </div>
           </div>
 

@@ -8,7 +8,7 @@
     </div>
     <div class="info-row">
       <span>🕓 <strong>Hora actual (Perú):</strong> {{ currentTimeLocal | date:'dd/MM/yyyy HH:mm:ss':'UTC' }}</span>
-      <span>📅 <strong>Fecha sesión:</strong> {{ session?.date || 'Cargando...' }}</span>
+      <span>📅 <strong>Fecha sesión:</strong> {{ session ? session.date : 'Cargando...' }}</span>
     </div>
   </div>
 
@@ -143,6 +143,7 @@
         <p><strong>Timestamp inicio (Local):</strong> {{ startTimeLocal }}</p>
         <p><strong>Total registros API:</strong> {{ allRecords.length }}</p>
         <p><strong>Registros filtrados:</strong> {{ records.length }}</p>
+        <p><strong>Último ID procesado:</strong> {{ lastProcessedId }}</p>
         <p><strong>Última actualización:</strong> {{ currentTime | date:'HH:mm:ss' }}</p>
       </div>
     </details>
