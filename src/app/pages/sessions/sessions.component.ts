@@ -44,6 +44,7 @@ export class SessionsComponent implements OnInit {
       this.todaySession = null;
       this.latestSession = null;
 
+      // Actualizar la hora cada segundo
       setInterval(() => {
         this.now = this.getPeruCurrentTime();
       }, 1000);
@@ -53,21 +54,31 @@ export class SessionsComponent implements OnInit {
   }
 
   /**
-   * Obtiene la hora actual de Perú (UTC-5)
+   * Obtiene la hora actual de Perú usando la zona horaria correcta
    */
   getPeruCurrentTime(): Date {
     const now = new Date();
-    // Perú está en UTC-5 (5 horas atrás de UTC)
-    const peruTime = new Date(now.getTime() - (5 * 60 * 60 * 1000));
-    return peruTime;
+    const peruTimeString = now.toLocaleString('en-CA', {
+      timeZone: 'America/Lima',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+    return new Date(peruTimeString);
   }
 
   /**
    * Obtiene la fecha actual de Perú en formato YYYY-MM-DD
    */
   getPeruTodayString(): string {
-    const peruTime = this.getPeruCurrentTime();
-    return peruTime.toISOString().split('T')[0];
+    const now = new Date();
+    return now.toLocaleDateString('en-CA', {
+      timeZone: 'America/Lima'
+    });
   }
 
   loadSessions(): void {
@@ -122,8 +133,22 @@ export class SessionsComponent implements OnInit {
   }
 
   deleteSession(id: string): void {
-    this.sessionService.deleteSession(id).subscribe(() => {
-      this.loadSessions();
+    // Opcional: agregar confirmación
+    const confirmed = confirm('¿Estás seguro de que quieres eliminar esta sesión? Se eliminarán también todos los datos de monitoreo asociados.');
+
+    if (!confirmed) {
+      return;
+    }
+
+    // Cambiar de deleteSession a deleteSessionComplete
+    this.sessionService.deleteSessionComplete(id).subscribe({
+      next: () => {
+        this.loadSessions();
+      },
+      error: (error) => {
+        console.error('Error al eliminar sesión:', error);
+        alert('Error al eliminar la sesión. Por favor, inténtalo de nuevo.');
+      }
     });
   }
 
@@ -137,7 +162,7 @@ export class SessionsComponent implements OnInit {
   }
 
   /**
-   * Método auxiliar para formatear la fecha en español
+   * Método auxiliar para formatear la fecha en español (Perú)
    */
   formatDateInSpanish(date: Date): string {
     return date.toLocaleDateString('es-PE', {
@@ -150,7 +175,7 @@ export class SessionsComponent implements OnInit {
   }
 
   /**
-   * Método auxiliar para formatear la hora en español
+   * Método auxiliar para formatear la hora en español (Perú)
    */
   formatTimeInSpanish(date: Date): string {
     return date.toLocaleTimeString('es-PE', {

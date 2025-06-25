@@ -22,7 +22,7 @@ export class PatientService {
   }
 
 
-  getPatientById(id: number): Observable<Patient> {
+  getPatientById(id: string): Observable<Patient> {
     return this.http.get<Patient>(`${this.apiUrl}/${id}`);
   }
 

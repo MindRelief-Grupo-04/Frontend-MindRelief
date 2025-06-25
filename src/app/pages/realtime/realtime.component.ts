@@ -21,12 +21,13 @@ export class RealtimeComponent implements OnInit, OnDestroy {
   session!: Session;
   patientName = '';
   monitoring = false;
-  startTime = 0;
-  startTimeLocal = 0; // Hora de inicio en zona horaria local
+  startTime = 0; // Timestamp UTC de inicio del monitoreo
+  startTimeLocal = 0; // Hora de inicio en zona horaria local para mostrar
   records: HeartRate[] = [];
   allRecords: HeartRate[] = []; // Todos los registros para debugging
   sub?: Subscription;
   monitoringDuration = 0; // Duración del monitoreo en segundos
+  lastProcessedId = 0; // ID del último registro procesado para evitar duplicados
 
   currentTime: Date = new Date(); // Tiempo actual
   currentTimeLocal: Date = new Date(); // Tiempo actual en Perú
@@ -104,17 +105,44 @@ export class RealtimeComponent implements OnInit, OnDestroy {
     this.records = [];
     this.allRecords = [];
     this.monitoringDuration = 0;
+    this.lastProcessedId = 0; // Resetear el ID del último procesado
 
     console.log('=== INICIANDO MONITOREO ===');
     console.log('Timestamp UTC de inicio:', this.startTime);
+    console.log('Fecha/hora UTC de inicio:', new Date(this.startTime));
     console.log('Hora local de inicio:', new Date(this.startTimeLocal));
     console.log('Hora Perú de inicio:', this.getPeruCurrentTime());
 
-    // Cargar datos inmediatamente al iniciar
-    this.fetchData();
+    // Obtener el ID más alto actual para establecer baseline
+    this.getLastRecordId().then(lastId => {
+      this.lastProcessedId = lastId;
+      console.log('Último ID procesado al inicio:', this.lastProcessedId);
 
-    // Luego cargar cada 6 segundos
-    this.sub = interval(6000).subscribe(() => this.fetchData());
+      // Cargar datos inmediatamente al iniciar (pero sin datos anteriores)
+      this.fetchData();
+
+      // Luego cargar cada 6 segundos
+      this.sub = interval(6000).subscribe(() => this.fetchData());
+    });
+  }
+
+  /**
+   * Obtiene el ID más alto de los registros actuales
+   */
+  async getLastRecordId(): Promise<number> {
+    try {
+      const data = await this.http.get<HeartRate[]>('https://mindreliefdb.onrender.com/heartRateData').toPromise();
+      if (data && data.length > 0) {
+        // Encontrar el ID más alto, convirtiendo a número
+        const maxId = Math.max(...data.map(record => Number(record.id) || 0));
+        console.log('ID más alto encontrado:', maxId);
+        return maxId;
+      }
+      return 0;
+    } catch (error) {
+      console.error('Error al obtener último ID:', error);
+      return 0;
+    }
   }
 
   fetchData(): void {
@@ -124,34 +152,64 @@ export class RealtimeComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           console.log('Datos recibidos:', data.length, 'registros');
-          console.log('Datos completos:', data);
 
           this.allRecords = data; // Guardar todos los datos para debugging
 
-          // Filtrar datos que llegaron después del inicio del monitoreo
-          // Usamos un margen de 30 segundos antes del inicio para capturar datos recientes
-          const marginTime = this.startTime - (30 * 1000);
-          const filtered = data.filter(hd => {
-            const recordTime = hd.syncTimestamp || hd.recordedAt;
-            const isAfterStart = recordTime >= marginTime;
+          // Filtrar solo registros nuevos (con ID mayor al último procesado)
+          // Y que hayan sido creados después del inicio del monitoreo
+          const newRecords = data.filter(record => {
+            const recordId = Number(record.id) || 0;
+            const recordTime = record.syncTimestamp || record.recordedAt;
 
-            if (isAfterStart) {
-              console.log(`✅ Registro incluido: ${recordTime} >= ${marginTime}`);
+            // Condiciones para incluir el registro:
+            // 1. ID mayor al último procesado (registro nuevo)
+            // 2. Timestamp mayor o igual al inicio del monitoreo (creado después de presionar iniciar)
+            const isNewRecord = recordId > this.lastProcessedId;
+            const isAfterStart = recordTime >= this.startTime;
+
+            if (isNewRecord && isAfterStart) {
+              console.log(`✅ Registro NUEVO incluido:`, {
+                id: recordId,
+                timestamp: recordTime,
+                dateTime: new Date(recordTime),
+                isNewRecord,
+                isAfterStart
+              });
+              return true;
+            } else {
+              if (isNewRecord && !isAfterStart) {
+                console.log(`❌ Registro nuevo pero anterior al inicio:`, {
+                  id: recordId,
+                  timestamp: recordTime,
+                  startTime: this.startTime,
+                  difference: recordTime - this.startTime
+                });
+              }
+              return false;
             }
-
-            return isAfterStart;
           });
 
-          console.log('Registros filtrados:', filtered.length);
+          console.log('Registros nuevos encontrados:', newRecords.length);
 
-          // Ordenar por timestamp más reciente primero
-          this.records = filtered.sort((a, b) => {
-            const timeA = b.syncTimestamp || b.recordedAt;
-            const timeB = a.syncTimestamp || a.recordedAt;
-            return timeA - timeB;
-          });
+          // Agregar solo los nuevos registros a la lista existente
+          if (newRecords.length > 0) {
+            // Actualizar el último ID procesado
+            const newMaxId = Math.max(...newRecords.map(r => Number(r.id) || 0));
+            this.lastProcessedId = newMaxId;
 
-          console.log('Registros ordenados:', this.records);
+            // Agregar nuevos registros al inicio de la lista (más recientes primero)
+            this.records = [...newRecords, ...this.records];
+
+            // Ordenar por timestamp más reciente primero
+            this.records.sort((a, b) => {
+              const timeA = a.syncTimestamp || a.recordedAt;
+              const timeB = b.syncTimestamp || b.recordedAt;
+              return timeB - timeA;
+            });
+
+            console.log('Total registros en monitoreo:', this.records.length);
+            console.log('Último ID procesado actualizado a:', this.lastProcessedId);
+          }
         },
         error: (error) => {
           console.error('Error al obtener datos:', error);
