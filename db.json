@@ -143,6 +143,13 @@
       "userId": "b604",
       "date": "2025-06-24",
       "description": "sesion 1"
+    },
+    {
+      "id": "4855",
+      "patientId": "a076",
+      "userId": "1",
+      "date": "2025-07-09",
+      "description": "Avion"
     }
   ],
   "recordedSessions": [],
@@ -176,6 +183,23 @@
         }
       ],
       "createdAt": "2025-06-25T01:28:44.123Z"
+    },
+    {
+      "id": "778c",
+      "sessionId": "4855",
+      "patientId": "a076",
+      "userId": "1",
+      "startTime": 1752089693942,
+      "endTime": 1752089699907,
+      "startTimeLocal": 1752071693942,
+      "endTimeLocal": 1752071699907,
+      "duration": 5,
+      "totalRecords": 0,
+      "avgHeartRate": 0,
+      "minHeartRate": 0,
+      "maxHeartRate": 0,
+      "records": [],
+      "createdAt": "2025-07-09T19:34:59.907Z"
     }
   ]
 }
