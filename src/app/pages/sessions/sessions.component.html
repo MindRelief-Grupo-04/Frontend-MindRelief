@@ -1,0 +1,71 @@
+<div class="sessions-container">
+  <h2>Sesiones de {{ patientName }}</h2>
+  <p><strong>Hora actual (Perú):</strong> {{ formatDateInSpanish(now) }} — {{ formatTimeInSpanish(now) }}</p>
+
+  <!-- Agendar nueva sesión -->
+  <div class="session-form">
+    <h3>Agendar nueva sesión</h3>
+    <form (ngSubmit)="addSession()">
+      <input type="date" [(ngModel)]="newDate" name="date" required />
+      <input type="text" [(ngModel)]="newDescription" name="description" placeholder="Descripción" required />
+      <button type="submit">Agregar</button>
+    </form>
+  </div>
+
+  <!-- Card: Sesión de hoy -->
+  <div *ngIf="todaySession" class="latest-session-card today-session">
+    <h4>✅ Sesión programada para hoy</h4>
+    <p><strong>{{ todaySession.date }}</strong> — {{ todaySession.description }}</p>
+    <button (click)="startMonitoring(todaySession)" class="monitor-btn">🎯 Iniciar monitoreo</button>
+  </div>
+
+  <!-- Card: Última sesión registrada (solo si no es la de hoy) -->
+  <div *ngIf="latestSession && latestSession !== todaySession" class="latest-session-card">
+    <h4>📋 Última sesión registrada</h4>
+    <p><strong>{{ latestSession.date }}</strong> — {{ latestSession.description }}</p>
+    <small *ngIf="!isToday(latestSession.date)" class="not-today-note">
+      ⚠️ Esta sesión no es para hoy, por lo que no se puede monitorear
+    </small>
+  </div>
+
+  <!-- Mensaje cuando no hay sesión para hoy -->
+  <div *ngIf="!todaySession" class="no-today-session">
+    <h4>📅 No hay sesión programada para hoy</h4>
+    <p>Agenda una nueva sesión para la fecha de hoy si deseas iniciar un monitoreo.</p>
+  </div>
+
+  <!-- Lista de sesiones -->
+  <div class="session-list">
+    <h3>📊 Sesiones agendadas</h3>
+    <table class="sessions-table">
+      <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let session of sessions" [class.today-row]="isToday(session.date)">
+        <td>
+          {{ session.date }}
+          <span *ngIf="isToday(session.date)" class="today-badge">HOY</span>
+        </td>
+        <td>{{ session.description }}</td>
+        <td>
+          <span *ngIf="isToday(session.date)" class="status-badge active">✅ Disponible para monitoreo</span>
+          <span *ngIf="!isToday(session.date)" class="status-badge inactive">⏳ Programada</span>
+        </td>
+        <td>
+          <button (click)="viewSession(session)" class="view-btn">👁️ Ver</button>
+          <button *ngIf="isToday(session.date)"
+                  (click)="startMonitoring(session)"
+                  class="monitor-btn-small">🎯 Monitorear</button>
+          <button class="delete" (click)="deleteSession(session.id)">🗑️</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

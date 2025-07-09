@@ -1,0 +1,31 @@
+/* Título y botón arriba, fuera del fondo gris */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px;
+  margin-bottom: 0;
+}
+
+.main-header h2 {
+  font-size: 28px;
+  color: #1a1a2e;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Fondo gris solo para las tarjetas */
+.home-container {
+  padding: 40px;
+  background-color: #dad4d4;
+  border-radius: 20px;
+  margin: 40px;
+  margin-top: 20px;
+}
+
+/* Rejilla de tarjetas */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+}

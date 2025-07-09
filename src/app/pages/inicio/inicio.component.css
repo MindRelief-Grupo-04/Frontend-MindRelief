@@ -1,0 +1,76 @@
+/* Fondo general con imagen */
+.inicio-wrapper {
+  background-image: url('https://www.gacetainmobiliaria.com/wp-content/uploads/2024/03/hombre-cima-montana-concepto-exito-ganador-fondo-amanecer-o-puesta-sol-scaled.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* Contenedor centrado y translúcido */
+.inicio-container {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+  padding: 48px;
+  max-width: 960px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.inicio-container h1 {
+  font-size: 32px;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+
+.inicio-container h1 span {
+  color: #5b46f6;
+}
+
+/* Texto introductorio */
+.intro-text {
+  font-size: 18px;
+  color: #444;
+  margin-bottom: 40px;
+}
+
+/* Caja de secciones */
+.feature-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.box {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 260px;
+}
+
+.box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.box h3 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #1a1a2e;
+}
+
+.box p {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: #666;
+}

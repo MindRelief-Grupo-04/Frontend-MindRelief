@@ -1,0 +1,29 @@
+<div class="card">
+  <!-- Panel izquierdo con imagen -->
+  <div class="left-panel">
+    <img [src]="patient.imageUrl" alt="Imagen del paciente" />
+  </div>
+
+  <!-- Panel derecho -->
+  <div class="right-panel">
+    <div class="header">
+      <h3>{{ patient.name }}</h3>
+      <button class="menu-btn" (click)="toggleOptions()">⋯</button>
+
+      <!-- Opciones desplegables -->
+      <div class="menu" *ngIf="showOptions">
+        <ul>
+          <li>Editar</li>
+          <li>Eliminar</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="meta">Edad: {{ patient.age }} años</p>
+    <p class="meta">Género: {{ patient.gender }}</p>
+
+    <button class="view-more" (click)="goToSessions()">
+      🔎 Ver Sesiones
+    </button>
+  </div>
+</div>

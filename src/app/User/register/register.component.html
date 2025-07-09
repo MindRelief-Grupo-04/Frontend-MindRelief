@@ -1,0 +1,68 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Crear cuenta</h2>
+    <p class="subtitle">Únete a nuestra comunidad</p>
+
+    <div class="error-message" *ngIf="error">
+      <i class="fas fa-exclamation-circle"></i>
+      {{error}}
+    </div>
+
+    <form (ngSubmit)="onRegister()">
+      <div class="form-group">
+        <label for="reg-name">
+          <i class="fas fa-user"></i> Nombre completo
+        </label>
+        <input
+          type="text"
+          id="reg-name"
+          [(ngModel)]="registerData.name"
+          name="name"
+          required
+          placeholder="Ingresa tu nombre"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="reg-email">
+          <i class="fas fa-envelope"></i> Correo electrónico
+        </label>
+        <input
+          type="email"
+          id="reg-email"
+          [(ngModel)]="registerData.email"
+          name="email"
+          required
+          placeholder="ejemplo@correo.com"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="reg-password">
+          <i class="fas fa-lock"></i> Contraseña
+        </label>
+        <div class="password-input">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="reg-password"
+            [(ngModel)]="registerData.password"
+            name="password"
+            required
+            placeholder="Crea una contraseña"
+          >
+          <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+            <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn register">
+        <i class="fas fa-user-plus"></i> Registrarse
+      </button>
+    </form>
+
+    <div class="additional-options">
+      <a routerLink="/login" class="switch-auth">¿Ya tienes una cuenta? Inicia sesión</a>
+    </div>
+  </div>
+</div>

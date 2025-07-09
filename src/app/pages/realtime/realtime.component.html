@@ -1,0 +1,151 @@
+<div class="realtime-container">
+  <h2 class="main-title">🫀 Monitoreo Cardíaco en Tiempo Real</h2>
+
+  <div class="patient-info-card">
+    <div class="info-row">
+      <span>👤 <strong>Paciente:</strong> {{ patientName }}</span>
+      <span>🆔 <strong>Sesión:</strong> {{ sessionId }}</span>
+    </div>
+    <div class="info-row">
+      <span>🕓 <strong>Hora actual (Perú):</strong> {{ currentTimeLocal | date:'dd/MM/yyyy HH:mm:ss':'UTC' }}</span>
+      <span>📅 <strong>Fecha sesión:</strong> {{ session ? session.date : 'Cargando...' }}</span>
+    </div>
+  </div>
+
+  <!-- Estado de no monitoreo -->
+  <div *ngIf="!monitoring" class="monitor-actions">
+    <div class="ready-card">
+      <h3>🚀 Listo para comenzar</h3>
+      <p>El monitoreo capturará los datos de frecuencia cardíaca desde el momento que presiones iniciar.</p>
+      <p><strong>⚠️ Importante:</strong> Asegúrate de que el dispositivo esté conectado y enviando datos.</p>
+    </div>
+    <button (click)="startMonitoring()" class="btn-start">
+      ▶️ Iniciar Monitoreo
+    </button>
+  </div>
+
+  <!-- Panel de monitoreo activo -->
+  <div *ngIf="monitoring" class="monitoring-panel">
+    <div class="monitoring-header">
+      <div class="status-indicator">
+        <div class="pulse-dot"></div>
+        <span>🔴 MONITOREANDO EN VIVO</span>
+      </div>
+      <div class="monitoring-info">
+        <span>⏱️ <strong>Inicio:</strong> {{ startTimeLocal | date:'HH:mm:ss':'UTC' }}</span>
+        <span>⏰ <strong>Duración:</strong> {{ formatDuration(monitoringDuration) }}</span>
+      </div>
+    </div>
+
+    <!-- Estadísticas en tiempo real -->
+    <div *ngIf="getStatistics()" class="stats-panel">
+      <h3>📊 Estadísticas en Tiempo Real</h3>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">{{ getStatistics()?.totalRecords }}</div>
+          <div class="stat-label">Registros</div>
+        </div>
+        <div class="stat-card" [style.border-color]="getHeartRateColor(getStatistics()?.avgHeartRate || 0)">
+          <div class="stat-value" [style.color]="getHeartRateColor(getStatistics()?.avgHeartRate || 0)">
+            {{ getStatistics()?.avgHeartRate }}
+          </div>
+          <div class="stat-label">
+            BPM Promedio
+            <small>({{ getHeartRateStatus(getStatistics()?.avgHeartRate || 0) }})</small>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ getStatistics()?.minHeartRate }}</div>
+          <div class="stat-label">BPM Mínimo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ getStatistics()?.maxHeartRate }}</div>
+          <div class="stat-label">BPM Máximo</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de registros recientes -->
+    <div class="records-section">
+      <h3>📈 Registros Recientes ({{ records.length }})</h3>
+
+      <div *ngIf="records.length === 0" class="no-data">
+        <div class="loading-indicator">
+          <div class="spinner"></div>
+          <p>Esperando datos del dispositivo...</p>
+          <small>Los datos aparecerán aquí cuando el dispositivo envíe información</small>
+        </div>
+      </div>
+
+      <div *ngIf="records.length > 0" class="records-list">
+        <div *ngFor="let record of records; let i = index"
+             class="record-item"
+             [class.latest]="i === 0">
+
+          <div class="record-header">
+            <div class="record-time">
+              <span class="time-label">🕐</span>
+              <span>{{ convertToPeruTime(record.syncTimestamp || record.recordedAt) | date:'HH:mm:ss':'UTC' }}</span>
+              <span *ngIf="i === 0" class="latest-badge">MÁS RECIENTE</span>
+            </div>
+            <div class="device-info">
+              <span class="device-id">📱 {{ record.deviceId }}</span>
+            </div>
+          </div>
+
+          <div class="record-data">
+            <div class="heart-rate-main" [style.color]="getHeartRateColor(record.avgHeartRate)">
+              <span class="heart-icon">🫀</span>
+              <span class="bpm-value">{{ record.avgHeartRate }}</span>
+              <span class="bpm-unit">BPM</span>
+              <span class="status-text">({{ getHeartRateStatus(record.avgHeartRate) }})</span>
+            </div>
+
+            <div class="heart-rate-range">
+              <span class="range-item">
+                <span class="range-label">Min:</span>
+                <span class="range-value">{{ record.minHeartRate }}</span>
+              </span>
+              <span class="range-separator">—</span>
+              <span class="range-item">
+                <span class="range-label">Max:</span>
+                <span class="range-value">{{ record.maxHeartRate }}</span>
+              </span>
+            </div>
+
+            <div class="record-timestamps">
+              <small>
+                📝 Registrado: {{ convertToPeruTime(record.recordedAt) | date:'HH:mm:ss':'UTC' }} |
+                🔄 Sincronizado: {{ convertToPeruTime(record.syncTimestamp) | date:'HH:mm:ss':'UTC' }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="monitoring-actions">
+      <button (click)="stopMonitoring()" class="btn-stop">
+        🛑 Detener Monitoreo y Guardar Datos
+      </button>
+      <p class="save-note">
+        💾 Al detener, se guardarán todos los registros capturados durante la sesión
+      </p>
+    </div>
+  </div>
+
+  <!-- Panel de debug (solo en desarrollo) -->
+  <div *ngIf="monitoring" class="debug-panel">
+    <details>
+      <summary>🔧 Información de Debug</summary>
+      <div class="debug-info">
+        <p><strong>Timestamp inicio (UTC):</strong> {{ startTime }}</p>
+        <p><strong>Timestamp inicio (Local):</strong> {{ startTimeLocal }}</p>
+        <p><strong>Total registros API:</strong> {{ allRecords.length }}</p>
+        <p><strong>Registros filtrados:</strong> {{ records.length }}</p>
+        <p><strong>Último ID procesado:</strong> {{ lastProcessedId }}</p>
+        <p><strong>Última actualización:</strong> {{ currentTime | date:'HH:mm:ss' }}</p>
+      </div>
+    </details>
+  </div>
+</div>

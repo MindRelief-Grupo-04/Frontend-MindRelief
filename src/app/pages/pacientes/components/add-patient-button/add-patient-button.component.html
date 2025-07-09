@@ -1,0 +1,23 @@
+<button class="add-button" (click)="toggleForm()">
+  ➕ Agregar Paciente
+</button>
+
+<div class="modal-backdrop" *ngIf="showForm">
+  <div class="modal">
+    <h3>Nuevo paciente</h3>
+    <form (ngSubmit)="submitForm()">
+      <input type="text" [(ngModel)]="name" name="name" placeholder="Nombre" required />
+      <input type="number" [(ngModel)]="age" name="age" placeholder="Edad" required min="1" />
+
+      <select [(ngModel)]="gender" name="gender">
+        <option>Femenino</option>
+        <option>Masculino</option>
+        <option>Otro</option>
+      </select>
+
+
+      <button type="submit" class="add-button" style="margin-top: 12px;">Guardar</button>
+    </form>
+    <button class="close-btn" (click)="toggleForm()">Cancelar</button>
+  </div>
+</div>
